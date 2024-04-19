@@ -1,3 +1,4 @@
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,13 +9,14 @@ datasource db {
 }
 
 model usuarios {
-  id       Int      @id @default(autoincrement())
-  name     String
-  email String
+  id          Int    @id @default(autoincrement())
+  fName       String
+  lName       String
+  companyName String? 
+  email       String
   password    String
-  role Role @default(USER) 
+  role        Role   @default(USER)
 }
-
 
 enum Role {
   USER

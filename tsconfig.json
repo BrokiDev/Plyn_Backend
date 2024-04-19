@@ -11,6 +11,6 @@
     "skipLibCheck": true,
     "strictNullChecks": true
   },
-  "include": ["src/**/*","helpers/*","utils/*"],
+  "include": ["src/**/*","src/helpers/*","src/utils/*"],
   "exclude": ["node_modules"]
 }

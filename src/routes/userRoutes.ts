@@ -1,11 +1,10 @@
-import express from 'express';
-import { createUser, getAllUser } from '../controllers/userController';
+/* eslint-disable @typescript-eslint/no-misused-promises */
+import { Router } from 'express';
+import { createUser, getAllUser, loginController } from '../controllers/users';
 
-export const userRouter = express.Router();
+export const userRouter = Router();
 
-// eslint-disable-next-line @typescript-eslint/no-misused-promises
 userRouter.route('/register').post(createUser);
-userRouter.route('/login').post();
+userRouter.route('/login').post(loginController);
 userRouter.route('/forgot-password').get();
-// eslint-disable-next-line @typescript-eslint/no-misused-promises
 userRouter.route('/me').get(getAllUser);
