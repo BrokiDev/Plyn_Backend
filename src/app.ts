@@ -15,5 +15,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/v1/auth', userRouter);
 
 app.listen(PORT, () => {
+  // eslint-disable-next-line no-console
   console.log(`Server Listening in port ${PORT}...`);
 });

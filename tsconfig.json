@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
     "target": "ES2016",
-    "module": "ESNext",
+    "module": "CommonJS",
     "moduleResolution": "Node",
-    "rootDir": "./src",
+    // "rootDir": "./src",
     "allowJs": true,
     "outDir": "./dist",
     "esModuleInterop": true,
@@ -11,5 +11,6 @@
     "skipLibCheck": true,
     "strictNullChecks": true
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*","helpers/*","utils/*"],
+  "exclude": ["node_modules"]
 }

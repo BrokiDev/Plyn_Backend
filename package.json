@@ -3,19 +3,23 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
-    "dev": "tsc -w & nodemon --loader esm-module-alias/loader --no-warnings ./dist/app.js"
+    "dev": "tsc -w & nodemon --loader esm-module-alias/loader --no-warnings ./dist/app.js",
+    "dev:api": "nodemon ./src/app.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "^5.12.1",
+    "@types/bcrypt": "^5.0.2",
+    "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
     "esm-module-alias": "^2.1.0",
     "express": "^4.19.2",
     "morgan": "^1.10.0",
-    "nodemon": "^3.1.0"
+    "nodemon": "^3.1.0",
+    "prisma": "^5.12.1"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
