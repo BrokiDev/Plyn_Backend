@@ -1,5 +1,6 @@
 import { type Request, type Response } from 'express';
 import { loginControllerService } from '../../services/auth';
+import type { ResponseI } from '../../interfaces/Response.interface';
 
 interface Login {
   email: string;
@@ -17,10 +18,11 @@ export const loginController = async (
       status: 'success',
       data,
     });
-  } catch (error) {
+  } catch (e) {
+    const error = e as ResponseI;
     res.status(401).json({
       status: 'failed',
-      message: error,
+      message: error.message,
     });
   }
 };
