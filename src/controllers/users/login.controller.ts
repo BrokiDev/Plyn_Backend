@@ -1,28 +1,23 @@
-import { type Request, type Response } from 'express';
+import type { NextFunction, Request, Response } from 'express';
 import { loginControllerService } from '../../services/auth';
-import type { ResponseI } from '../../interfaces/Response.interface';
+import { catchAsync } from '../../helpers/catchAsync';
 
 interface Login {
   email: string;
   password: string;
 }
 
-export const loginController = async (
-  { body }: Request,
-  res: Response,
-): Promise<void> => {
-  try {
+export const loginController = catchAsync(
+  async (
+    { body }: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
     const { email, password }: Login = body;
-    const data = await loginControllerService(email, password);
+    const data = await loginControllerService(email, password, next);
     res.status(200).json({
       status: 'success',
       data,
     });
-  } catch (e) {
-    const error = e as ResponseI;
-    res.status(401).json({
-      status: 'failed',
-      message: error.message,
-    });
-  }
-};
+  },
+);

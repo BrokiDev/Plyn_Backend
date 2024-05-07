@@ -1,29 +1,30 @@
-import type { NextFunction, Request, Response } from 'express';
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
+import type { NextFunction, Response } from 'express';
 import { verifyToken } from '../helpers/jwt.service';
+import { catchAsync } from '../helpers/catchAsync';
+import { db } from '../utils/db.server';
+import { AppError } from '../utils/appError';
+import type { RequestExt } from '../interfaces/ReqExt';
 
-export const checkJwt = (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-): Response<unknown, Record<string, unknown>> | undefined => {
-  try {
+export const checkJwt = catchAsync(
+  async (req: RequestExt, res: Response, next: NextFunction) => {
     const jwtByUser = req.headers.authorization;
     const jwt = jwtByUser?.split(' ').pop();
     const validateToken = verifyToken(`${jwt}`);
 
-    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-    if (!validateToken)
-      return res.status(401).json({
-        status: 'Unathorized',
-        message: "you don't have access to this route",
-      });
-    else {
-      next();
+    if (!validateToken) {
+      next(new AppError(`you don't have access to this route`, 401));
     }
-  } catch (error) {
-    res.status(400).json({
-      status: 'failed',
-      message: error,
+
+    const currentUser = await db.usuarios.findFirst({
+      where: { email: validateToken.userId },
     });
-  }
-};
+
+    if (!currentUser) {
+      next(new AppError('Unauthorized', 401));
+    }
+
+    req.user = currentUser;
+    next();
+  },
+);

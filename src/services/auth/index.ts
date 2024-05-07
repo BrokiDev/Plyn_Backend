@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-confusing-void-expression */
 import { type $Enums } from '@prisma/client';
 import {
   hashedPasswordService,
@@ -6,6 +7,8 @@ import {
 import { db } from '../../utils/db.server';
 import { type User } from '../../interfaces/Users.interface';
 import { generateToken } from '../../helpers/jwt.service';
+import type { NextFunction } from 'express';
+import { AppError } from '../../utils/appError';
 
 export const createUserService = async (dataBody: User): Promise<User> => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -41,6 +44,7 @@ export const getAllUserService = async (): Promise<
 export const loginControllerService = async (
   email: string,
   password: string,
+  next: NextFunction,
 ): Promise<{
   token: string;
   user: {
@@ -53,13 +57,13 @@ export const loginControllerService = async (
   });
 
   if (user == null) {
-    throw new Error('Invalid Credentials');
+    next(new AppError('Invalid Credentials', 401));
   }
 
-  const isPasswordValid = verifyPasswordService(password, user.password);
+  const isPasswordValid = verifyPasswordService(password, `${user?.password}`);
 
   if (!isPasswordValid) {
-    throw new Error('Invalid Credentials');
+    next(new AppError('Invalid Credentials', 401));
   }
 
   const token = generateToken(email);
@@ -67,7 +71,7 @@ export const loginControllerService = async (
   const data = {
     token,
     user: {
-      email: user.email,
+      email: `${user?.email}`,
     },
   };
   return data;
