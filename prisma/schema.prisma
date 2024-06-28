@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,17 +7,37 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model usuarios {
-  id          Int    @id @default(autoincrement())
+model users {
+  id          Int             @id @default(autoincrement())
+  uuid        String          @unique @default(uuid())
   fName       String
   lName       String
-  companyName String? 
-  email       String
-  password    String
-  role        Role   @default(USER)
+  companyName String?
+  email       String          @unique
+  active      Boolean @default(false)
+  password    user_passwords[]
+  role        roles?
+  createdAt   DateTime @default(now())
+  updateAt    DateTime? 
+  deleteAt    DateTime?
 }
 
-enum Role {
-  USER
-  ADMIN
+model user_passwords {
+  id        Int      @id @default(autoincrement())
+  uuid      String   @unique @default(uuid())
+  password  String
+  active    Boolean @default(true)
+  createdAt DateTime @default(now())
+  updateAt  DateTime?  
+  userId    String    
+  user      users    @relation(fields: [userId], references: [uuid])
+}
+
+model roles {
+  id        Int      @id @default(autoincrement())
+  uuid      String   @unique @default(uuid())
+  name      String
+  userId    String   @unique
+  createdAt DateTime @default(now())
+  user      users    @relation(fields: [userId], references: [uuid])
 }

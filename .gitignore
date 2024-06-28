@@ -1,5 +1,12 @@
 ##
 node_modules
+pgadmin
+postgres
 dist
 .env
 .eslintrc.json
+
+# Logs
+logs
+*.log
+

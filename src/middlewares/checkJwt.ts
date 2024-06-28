@@ -16,7 +16,7 @@ export const checkJwt = catchAsync(
       next(new AppError(`you don't have access to this route`, 401));
     }
 
-    const currentUser = await db.usuarios.findFirst({
+    const currentUser = await db.users.findFirst({
       where: { email: validateToken.userId },
     });
 
