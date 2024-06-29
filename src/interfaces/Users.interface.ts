@@ -1,4 +1,5 @@
 export interface User {
+  uuid?: string;
   fName: string;
   lName: string;
   companyName: string | null;

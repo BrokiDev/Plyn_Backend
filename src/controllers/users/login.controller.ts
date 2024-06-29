@@ -17,7 +17,8 @@ export const loginController = catchAsync(
     const data = await loginControllerService(email, password, next);
     res.status(200).json({
       status: 'success',
-      data,
+      token: data.token,
+      user: data.user,
     });
   },
 );

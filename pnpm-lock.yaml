@@ -35,6 +35,9 @@ dependencies:
   morgan:
     specifier: ^1.10.0
     version: 1.10.0
+  nodemailer:
+    specifier: ^6.9.14
+    version: 6.9.14
   nodemon:
     specifier: ^3.1.0
     version: 3.1.0
@@ -52,6 +55,9 @@ devDependencies:
   '@types/morgan':
     specifier: ^1.9.9
     version: 1.9.9
+  '@types/nodemailer':
+    specifier: ^6.4.15
+    version: 6.4.15
   '@typescript-eslint/eslint-plugin':
     specifier: ^6.4.0
     version: 6.21.0(@typescript-eslint/parser@6.21.0)(eslint@8.57.0)(typescript@5.4.3)
@@ -308,6 +314,12 @@ packages:
     resolution: {integrity: sha512-dHM6ZxwlmuZaRmUPfv1p+KrdD1Dci04FbdEm/9wEMouFqxYoFl5aMkt0VMAUtYRQDyYvD41WJLukhq/ha3YuTw==}
     dependencies:
       undici-types: 5.26.5
+
+  /@types/nodemailer@6.4.15:
+    resolution: {integrity: sha512-0EBJxawVNjPkng1zm2vopRctuWVCxk34JcIlRuXSf54habUWdz1FB7wHDqOqvDa8Mtpt0Q3LTXQkAs2LNyK5jQ==}
+    dependencies:
+      '@types/node': 20.11.30
+    dev: true
 
   /@types/qs@6.9.14:
     resolution: {integrity: sha512-5khscbd3SwWMhFqylJBLQ0zIu7c1K6Vz0uBIt915BI3zV0q1nfjRQD3RqSBcPaO6PHEF4ov/t9y89fSiyThlPA==}
@@ -2167,6 +2179,11 @@ packages:
         optional: true
     dependencies:
       whatwg-url: 5.0.0
+    dev: false
+
+  /nodemailer@6.9.14:
+    resolution: {integrity: sha512-Dobp/ebDKBvz91sbtRKhcznLThrKxKt97GI2FAlAyy+fk19j73Uz3sBXolVtmcXjaorivqsbbbjDY+Jkt4/bQA==}
+    engines: {node: '>=6.0.0'}
     dev: false
 
   /nodemon@3.1.0:

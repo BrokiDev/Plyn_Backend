@@ -17,6 +17,7 @@ model users {
   active      Boolean @default(false)
   password    user_passwords[]
   role        roles?
+  token       user_tokens[]
   createdAt   DateTime @default(now())
   updateAt    DateTime? 
   deleteAt    DateTime?
@@ -39,5 +40,19 @@ model roles {
   name      String
   userId    String   @unique
   createdAt DateTime @default(now())
+  user      users    @relation(fields: [userId], references: [uuid])
+}
+
+
+model  user_tokens {
+  id        Int      @id @default(autoincrement())
+  uuid      String   @unique @default(uuid())
+  type      String
+  token     String
+  used      Boolean @default(false)
+  createdAt DateTime @default(now())
+  expiredAt  DateTime?
+  usedAt    DateTime?
+  userId    String
   user      users    @relation(fields: [userId], references: [uuid])
 }
