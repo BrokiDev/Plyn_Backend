@@ -16,7 +16,7 @@ model users {
   email       String          @unique
   active      Boolean @default(false)
   password    user_passwords[]
-  role        roles?
+  role        roles[] 
   token       user_tokens[]
   createdAt   DateTime @default(now())
   updateAt    DateTime? 
@@ -37,9 +37,11 @@ model user_passwords {
 model roles {
   id        Int      @id @default(autoincrement())
   uuid      String   @unique @default(uuid())
-  name      String
-  userId    String   @unique
+  name      String  @default("USER")
+  active    Boolean @default(true)
   createdAt DateTime @default(now())
+  updateAt  DateTime?
+  userId    String
   user      users    @relation(fields: [userId], references: [uuid])
 }
 

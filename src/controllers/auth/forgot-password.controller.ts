@@ -3,8 +3,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { NextFunction, Request, Response } from 'express';
 import { catchAsync } from '../../helpers/catchAsync';
-import { forgotPasswordService } from '../../services/auth';
 import { AppError } from '../../utils/appError';
+import { forgotPasswordService } from '../../services/auth/forgot-password.service';
 
 export const forgotPasswordController = catchAsync(
   async ({ body }: Request, res: Response, next: NextFunction) => {

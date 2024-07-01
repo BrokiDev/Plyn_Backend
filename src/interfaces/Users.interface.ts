@@ -5,5 +5,5 @@ export interface User {
   companyName: string | null;
   email: string;
   password: string;
-  role: 'ADMIN' | 'USER';
+  role?: string;
 }

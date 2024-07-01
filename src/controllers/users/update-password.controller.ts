@@ -3,7 +3,7 @@
 
 import type { NextFunction, Request, Response } from 'express';
 import { catchAsync } from '../../helpers/catchAsync';
-import { updateUserPasswordService } from '../../services/auth';
+import { updateUserPasswordService } from '../../services/user/update-password.service';
 
 interface BodyI {
   password: string;

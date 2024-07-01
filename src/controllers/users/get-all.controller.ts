@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import { getAllUserService } from '../../services/auth';
+import { getAllUserService } from '../../services/user/get-all.service';
 
 export const getAllUser = async (
   req: Request,
