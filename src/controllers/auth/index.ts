@@ -5,3 +5,4 @@ export * from './verify-email.controller';
 export * from './sign-in.controller';
 export * from './sign-up.controller';
 export * from './logout.controller';
+export * from './resend-email.controller';

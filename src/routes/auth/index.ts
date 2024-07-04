@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { Router } from 'express';
 import {
   forgotPasswordController,
@@ -7,6 +6,7 @@ import {
   signUpController,
   signInController,
   logoutController,
+  resendVerificationEmailController,
 } from '../../controllers/auth';
 
 export const authRouter = Router();
@@ -19,4 +19,6 @@ authRouter.route('/reset-password/:token').patch();
 authRouter.route('/me').get(meController);
 authRouter.route('/sign-out').get(logoutController);
 authRouter.route('/refresh-token').get();
-authRouter.route('/resend-verification-email').post();
+authRouter
+  .route('/resend-verification-email')
+  .post(resendVerificationEmailController);
