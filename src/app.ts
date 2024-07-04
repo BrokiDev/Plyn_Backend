@@ -4,12 +4,13 @@ import express from 'express';
 import morgan from 'morgan';
 import * as dotenv from 'dotenv';
 import cors from 'cors';
-import type { Request, Response } from 'express';
+import type { NextFunction, Request, Response } from 'express';
 import { errorHandler } from './middlewares/errorHandler';
 import cookieParser from 'cookie-parser';
 // import { authRouter } from './routes/auth';
 import { Routes } from './routes';
 import { setupSwagger } from './swagger';
+import { AppError } from './utils/appError';
 
 dotenv.config({ path: '.env' });
 
@@ -40,8 +41,12 @@ app.listen(PORT, () => {
   console.log(`Swagger docs available at http://localhost:${PORT}/api-docs`);
 });
 
-app.all('*', (req: Request, res: Response) => {
-  throw new Error(`Can't find the route ${req.originalUrl} on this server`);
+app.all('*', (req: Request, res: Response, next: NextFunction) => {
+  const err = new AppError(
+    `Can't find ${req.originalUrl} on this server!`,
+    404,
+  );
+  next(err);
 });
 
 process.on('unhandledRejection', (err: any) => {

@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsc -w & nodemon --loader esm-module-alias/loader --no-warnings ./dist/app.js",
+    "build": "tsc",
+    "start": "node --watch dist/app.js",
+    "dev": "tsc -w & nodemon --watch src --watch tsconfig.json --exec 'tsc && node dist/app.js'",
     "dev:api": "nodemon ./src/app.ts"
   },
   "keywords": [],

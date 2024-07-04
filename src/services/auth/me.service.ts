@@ -29,6 +29,10 @@ export const meService = async (
 
   const decoded = verifyToken(token);
 
+  if (!decoded) {
+    next(new AppError('Invalid token', 401));
+  }
+
   const user = await db.users.findFirst({
     where: {
       email: decoded.userId,

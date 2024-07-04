@@ -1,12 +1,22 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { type JwtPayload, sign, verify } from 'jsonwebtoken';
 import * as dotenv from 'dotenv';
 import type { Response, Request } from 'express';
 import { encryptCookie } from './encrypt.service';
+import { AppError } from '../utils/appError';
 
 dotenv.config({ path: '.env' });
 
 interface JwtPayloadExt extends JwtPayload {
   userId?: string;
+}
+
+interface cookieOptionsI {
+  httpOnly: boolean;
+  secure: boolean;
+  maxAge: number;
+  sameSite: string;
+  expires: Date;
 }
 
 const JWT_SECRET = `${process.env.JWT_SECRET}`;
@@ -16,18 +26,35 @@ export const generateToken = (userId: string): string => {
 };
 
 export const verifyToken = (token: string): JwtPayloadExt => {
-  return verify(token, JWT_SECRET) as JwtPayloadExt;
+  if (!token) {
+    throw new AppError('Please log in', 401);
+  }
+  const tokenReceived = verify(token, JWT_SECRET) as JwtPayloadExt;
+
+  if (tokenReceived.exp === undefined) {
+    throw new AppError('Invalid token', 401);
+  }
+
+  const tokenExp = tokenReceived.exp * 1000;
+  const now = Date.now();
+
+  if (tokenExp < now) {
+    throw new AppError('Unauthorized, please login again', 401);
+  }
+
+  return tokenReceived;
 };
 
 export const sendTokenByCookie = (res: Response, token: string): void => {
   const encryptedValue = encryptCookie(token);
-  res.cookie('SessionToken', encryptedValue, {
+  const cookieOptions: cookieOptionsI = {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    maxAge: 24 * 60 * 60 * 1000,
+    maxAge: 1000 * 60 * 60 * 1,
     sameSite: 'strict',
-    expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-  });
+    expires: new Date(Date.now() + 1000 * 60 * 60 * 1),
+  };
+  res.cookie('SessionToken', encryptedValue, cookieOptions as object);
 };
 
 export const getTokenFromCookie = (req: Request): string => {

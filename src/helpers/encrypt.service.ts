@@ -33,6 +33,9 @@ export const encryptCookie = (text: string): string => {
 };
 
 export const decryptCookie = (hash: string): string => {
+  if (hash === undefined || hash === null || hash === '') {
+    return '';
+  }
   const parts = hash.split(':');
   // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
   const iv = Buffer.from(parts.shift() as string, 'hex');
