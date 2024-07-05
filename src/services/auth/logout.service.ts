@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-confusing-void-expression */
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import type { NextFunction } from 'express';
 import { AppError } from '../../utils/appError';
 

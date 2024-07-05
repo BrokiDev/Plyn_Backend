@@ -1,10 +1,6 @@
 import { createHash, randomBytes } from 'crypto';
 import { db } from '../../utils/db.server';
-
-export enum TokenType {
-  EMAIL_VERIFICATION = 'EMAIL_VERIFICATION',
-  PASSWORD_RESET = 'PASSWORD_RESET',
-}
+import { TokenType } from '../../interfaces/tokenType';
 
 export const createTokenVerificationService = async (
   user: { uuid: string },

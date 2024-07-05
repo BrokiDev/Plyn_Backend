@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import type { NextFunction, Request } from 'express';
 import { decryptCookie } from '../../helpers/encrypt.service';
 import { verifyToken } from '../../helpers/jwt.service';

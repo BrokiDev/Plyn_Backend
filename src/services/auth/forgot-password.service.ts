@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import type { NextFunction } from 'express';
 import { AppError } from '../../utils/appError';
 import { db } from '../../utils/db.server';
 import { sendEmail } from '../../utils/Emails';
-import { createTokenVerificationService, TokenType } from '../token';
+import { createTokenVerificationService } from '../token';
+import { TokenType } from '../../interfaces/tokenType';
 
 export const forgotPasswordService = async (
   email: string,

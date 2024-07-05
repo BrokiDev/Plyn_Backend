@@ -1,6 +1,7 @@
 import { db } from '../../utils/db.server';
-import { createTokenVerificationService, TokenType } from '../token';
+import { createTokenVerificationService } from '../token';
 import { sendEmail } from '../../utils/Emails';
+import { TokenType } from '../../interfaces/tokenType';
 
 export const resendVerificationEmailService = async (
   email: string,

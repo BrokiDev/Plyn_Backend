@@ -5,7 +5,8 @@ import type { User } from '../../interfaces/Users.interface';
 import { AppError } from '../../utils/appError';
 import { db } from '../../utils/db.server';
 import { sendEmail } from '../../utils/Emails';
-import { createTokenVerificationService, TokenType } from '../token';
+import { createTokenVerificationService } from '../token';
+import { TokenType } from '../../interfaces/tokenType';
 
 export const signUpService = async (
   dataBody: User,

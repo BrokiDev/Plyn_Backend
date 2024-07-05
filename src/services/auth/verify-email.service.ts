@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import type { NextFunction } from 'express';
 import { generateToken } from '../../helpers/jwt.service';
 import { AppError } from '../../utils/appError';
