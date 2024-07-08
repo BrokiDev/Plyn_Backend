@@ -8,7 +8,7 @@ export const verifyEmailController = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const token = req.params.token;
     const data = await verifyEmailService(token, next);
-    const tokenSend = sendTokenByCookie(res, data);
+    const tokenSend = sendTokenByCookie(res, `${data}`);
     res.status(200).json({
       status: 'success',
       message: 'Email Verified Successfully',
