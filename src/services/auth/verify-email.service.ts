@@ -4,10 +4,7 @@ import { AppError } from '../../utils/appError';
 import { db } from '../../utils/db.server';
 import { createHash } from 'crypto';
 
-export const verifyEmailService = async (
-  token: string,
-  next: NextFunction,
-): Promise<string> => {
+export const verifyEmailService = async (token: string, next: NextFunction) => {
   const hashedToken = createHash('sha256').update(token).digest('hex');
   const tokenData = await db.user_tokens.findFirst({
     where: {
@@ -21,11 +18,11 @@ export const verifyEmailService = async (
   });
 
   if (!tokenData) {
-    next(new AppError('Invalid or expired token', 400));
+    return next(new AppError('Invalid or expired token', 400));
   }
 
   if (tokenData?.used) {
-    next(new AppError('Token already used', 400));
+    return next(new AppError('Token already used', 400));
   }
 
   await db.user_tokens.update({

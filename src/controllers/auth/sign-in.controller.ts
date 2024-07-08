@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-confusing-void-expression */
 import type { NextFunction, Request, Response } from 'express';
 import { catchAsync } from '../../helpers/catchAsync';
 import { sendTokenByCookie } from '../../helpers/jwt.service';

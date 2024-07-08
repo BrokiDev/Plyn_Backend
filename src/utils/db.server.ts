@@ -1,5 +1,4 @@
 /* eslint-disable no-var */
-/* eslint-disable @typescript-eslint/naming-convention */
 import { PrismaClient } from '@prisma/client';
 
 let db: PrismaClient;

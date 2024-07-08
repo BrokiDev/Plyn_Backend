@@ -8,12 +8,7 @@ export const signInService = async (
   email: string,
   password: string,
   next: NextFunction,
-): Promise<{
-  token: string;
-  user: {
-    email: string;
-  };
-}> => {
+) => {
   const user = await db.users.findFirst({
     where: { email },
   });
@@ -36,11 +31,11 @@ export const signInService = async (
   );
 
   if (!user || !isPasswordValid) {
-    next(new AppError('Invalid Credentials', 401));
+    return next(new AppError('Invalid Credentials', 401));
   }
 
   if (!user?.active) {
-    next(new AppError('Please verify your email before log in', 401));
+    return next(new AppError('Please verify your email before log in', 401));
   }
 
   const token = generateToken(`${user?.email}`);

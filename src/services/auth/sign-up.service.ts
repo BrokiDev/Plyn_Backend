@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import type { NextFunction } from 'express';
 import { hashedPasswordService } from '../../helpers/encrypt.service';
 import type { User } from '../../interfaces/Users.interface';
@@ -8,17 +7,7 @@ import { sendEmail } from '../../utils/Emails';
 import { createTokenVerificationService } from '../token';
 import { TokenType } from '../../interfaces/tokenType';
 
-export const signUpService = async (
-  dataBody: User,
-  next: NextFunction,
-): Promise<{
-  id: number;
-  uuid: string;
-  fName: string;
-  lName: string;
-  companyName: string | null;
-  email: string;
-}> => {
+export const signUpService = async (dataBody: User, next: NextFunction) => {
   const salts = 8;
   const newPass = hashedPasswordService(dataBody.password, salts);
   if (dataBody.password !== '') {
@@ -32,7 +21,7 @@ export const signUpService = async (
   });
 
   if (userExist) {
-    next(new AppError('User already exists', 400));
+    return next(new AppError('User already exists', 400));
   }
 
   const user = await db.users.create({
@@ -60,16 +49,18 @@ export const signUpService = async (
   );
 
   if (!tokenEmail) {
-    next(new AppError('Token not created', 500));
+    return next(new AppError('Token not created', 500));
   }
 
-  sendEmail({
-    email: 'bryantro855@gmail.com',
-    subject: 'Email Verification',
-    message: `Click the link to verify your email: ${process.env.CLIENT_URL}/verify-email/${tokenEmail}`,
-  }).catch((err: string) => {
-    next(new AppError(err, 500));
-  });
+  try {
+    sendEmail({
+      email: 'bryantro855@gmail.com',
+      subject: 'Email Verification',
+      message: `Click the link to verify your email: ${process.env.CLIENT_URL}/verify-email/${tokenEmail}`,
+    });
+  } catch (error) {
+    return next(new AppError(error, 500));
+  }
 
   return user;
 };

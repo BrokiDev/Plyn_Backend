@@ -1,5 +1,5 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-confusing-void-expression */
 
 import type { NextFunction, Request, Response } from 'express';
 import { catchAsync } from '../../helpers/catchAsync';

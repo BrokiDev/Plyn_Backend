@@ -6,6 +6,6 @@ export const logoutService = async (
   next: NextFunction,
 ): Promise<void> => {
   if (!token) {
-    next(new AppError('You are not logged in', 401));
+    return next(new AppError('You are not logged in', 401));
   }
 };

@@ -5,7 +5,7 @@ export const catchAsync = (fn) => {
     fn(req, res, next);
 
     if (fn instanceof Promise) {
-      fn.catch(next);
+      return fn.catch(next);
     }
   };
 };

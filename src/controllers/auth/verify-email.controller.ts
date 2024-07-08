@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-confusing-void-expression */
+/* eslint-disable prefer-destructuring */
 import type { Request, Response, NextFunction } from 'express';
 import { catchAsync } from '../../helpers/catchAsync';
 import { verifyEmailService } from '../../services/auth/verify-email.service';

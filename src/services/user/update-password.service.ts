@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-confusing-void-expression */
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import type { NextFunction } from 'express';
 import {
   hashedPasswordService,
@@ -13,7 +11,7 @@ export const updateUserPasswordService = async (
   uuid: string,
   body: string,
   next: NextFunction,
-): Promise<void> => {
+) => {
   const salts = 8;
   const newPass = hashedPasswordService(body, salts);
 
@@ -35,7 +33,9 @@ export const updateUserPasswordService = async (
   if (oldPass) {
     const isPasswordValid = verifyPasswordService(body, `${oldPass.password}`);
     if (isPasswordValid) {
-      next(new AppError('Password must not be the same as the old one', 400));
+      return next(
+        new AppError('Password must not be the same as the old one', 400),
+      );
     }
     await db.user_passwords.update({
       where: {

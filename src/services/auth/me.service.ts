@@ -4,24 +4,10 @@ import { verifyToken } from '../../helpers/jwt.service';
 import { AppError } from '../../utils/appError';
 import { db } from '../../utils/db.server';
 
-export const meService = async (
-  req: Request,
-  next: NextFunction,
-): Promise<{
-  id: number;
-  uuid: string;
-  fName: string;
-  lName: string;
-  companyName: string | null;
-  email: string;
-  active: boolean;
-  createdAt: Date;
-  updateAt: Date | null;
-  deleteAt: Date | null;
-} | null> => {
+export const meService = async (req: Request, next: NextFunction) => {
   const encryptedToken: string = req.cookies.SessionToken;
   if (!encryptedToken) {
-    next(new AppError('Please log in', 401));
+    return next(new AppError('Please log in', 401));
   }
 
   const token = decryptCookie(encryptedToken);
@@ -29,7 +15,7 @@ export const meService = async (
   const decoded = verifyToken(token);
 
   if (!decoded) {
-    next(new AppError('Invalid token', 401));
+    return next(new AppError('Invalid token', 401));
   }
 
   const user = await db.users.findFirst({
@@ -39,7 +25,7 @@ export const meService = async (
   });
 
   if (!user) {
-    next(new AppError('User not found', 404));
+    return next(new AppError('User not found', 404));
   }
 
   return user;

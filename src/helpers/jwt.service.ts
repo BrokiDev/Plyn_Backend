@@ -27,25 +27,25 @@ export const generateToken = (userId: string): string => {
 
 export const verifyToken = (token: string): JwtPayloadExt => {
   if (!token) {
-    throw new AppError('Please log in', 401);
+    return new AppError('Please log in', 401);
   }
   const tokenReceived = verify(token, JWT_SECRET) as JwtPayloadExt;
 
   if (tokenReceived.exp === undefined) {
-    throw new AppError('Invalid token', 401);
+    return new AppError('Invalid token', 401);
   }
 
   const tokenExp = tokenReceived.exp * 1000;
   const now = Date.now();
 
   if (tokenExp < now) {
-    throw new AppError('Unauthorized, please login again', 401);
+    return new AppError('Unauthorized, please login again', 401);
   }
 
   return tokenReceived;
 };
 
-export const sendTokenByCookie = (res: Response, token: string): void => {
+export const sendTokenByCookie = (res: Response, token: string) => {
   const encryptedValue = encryptCookie(token);
   const cookieOptions: cookieOptionsI = {
     httpOnly: true,

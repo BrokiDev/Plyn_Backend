@@ -13,7 +13,7 @@ export const checkJwt = catchAsync(
     const validateToken = verifyToken(`${jwt}`);
 
     if (!validateToken) {
-      next(new AppError(`you don't have access to this route`, 401));
+      return next(new AppError(`you don't have access to this route`, 401));
     }
 
     const currentUser = await db.users.findFirst({
@@ -21,7 +21,7 @@ export const checkJwt = catchAsync(
     });
 
     if (!currentUser) {
-      next(new AppError('Unauthorized', 401));
+      return next(new AppError('Unauthorized', 401));
     }
 
     req.user = currentUser;

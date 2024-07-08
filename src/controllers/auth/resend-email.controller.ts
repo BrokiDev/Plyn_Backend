@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-confusing-void-expression */
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { NextFunction, Request, Response } from 'express';
 import { catchAsync } from '../../helpers/catchAsync';
@@ -8,7 +6,7 @@ import { AppError } from '../../utils/appError';
 
 export const resendVerificationEmailController = catchAsync(
   ({ body }: Request, res: Response, next: NextFunction) => {
-    const email: string = body.email;
+    const { email } = body.email;
 
     if (!email) {
       return next(new AppError('Please provide an email', 400));

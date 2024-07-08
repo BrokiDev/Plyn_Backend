@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import express from 'express';
 import morgan from 'morgan';
@@ -46,7 +45,7 @@ app.all('*', (req: Request, res: Response, next: NextFunction) => {
     `Can't find ${req.originalUrl} on this server!`,
     404,
   );
-  next(err);
+  return next(err);
 });
 
 process.on('unhandledRejection', (err: any) => {
