@@ -19,7 +19,7 @@ export const sendEmail = async (option: {
   });
 
   const mailOptions = {
-    from: '"APPLICATION BROKE" <mailtrap@demomailtrap.com>',
+    from: '"Plyn Notification" <notify-plyn@bryantr.dev>',
     to: option.email,
     subject: option.subject,
     text: option.message,

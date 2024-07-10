@@ -6,6 +6,8 @@ import { AppError } from '../../utils/appError';
 import { db } from '../../utils/db.server';
 import { sendEmail } from '../../utils/Emails';
 import { createTokenVerificationService, TokenType } from '../token';
+import * as dotenv from 'dotenv';
+dotenv.config({ path: '.env' });
 
 export const signUpService = async (
   dataBody: User,
@@ -63,9 +65,9 @@ export const signUpService = async (
   }
 
   sendEmail({
-    email: 'bryantro855@gmail.com',
+    email: user.email,
     subject: 'Email Verification',
-    message: `Click the link to verify your email: ${process.env.CLIENT_URL}/verify-email/${tokenEmail}`,
+    message: `Click the link to verify your email: ${process.env.FRONTEND_URL}/auth/verify-email/${tokenEmail}`,
   }).catch((err: string) => {
     next(new AppError(err, 500));
   });
